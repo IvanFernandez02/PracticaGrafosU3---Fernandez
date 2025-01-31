@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "nombre": "Parque Central",
+        "latitud": -3.99313,
+        "longitud": -79.20422
+    },
+    {
+        "id": 2,
+        "nombre": "Redondel de la Universidad Nacional",
+        "latitud": -3.98745,
+        "longitud": -79.20032
+    },
+    {
+        "id": 3,
+        "nombre": "Plazoleta de San Sebastián",
+        "latitud": -3.99572,
+        "longitud": -79.20685
+    },
+    {
+        "id": 4,
+        "nombre": "Parque Pucará",
+        "latitud": -3.99189,
+        "longitud": -79.20976
+    },
+    {
+        "id": 5,
+        "nombre": "Parque Jipiro",
+        "latitud": -3.98415,
+        "longitud": -79.20831
+    },
+    {
+        "id": 6,
+        "nombre": "Estadio Reina del Cisne",
+        "latitud": -3.99102,
+        "longitud": -79.20289
+    },
+    {
+        "id": 7,
+        "nombre": "Plaza de San Francisco",
+        "latitud": -3.99731,
+        "longitud": -79.20498
+    },
+    {
+        "id": 8,
+        "nombre": "Parque Lineal La Tebaida",
+        "latitud": -3.99642,
+        "longitud": -79.20178
+    },
+    {
+        "id": 9,
+        "nombre": "Parque Recreacional de Zamora Huayco",
+        "latitud": -3.99857,
+        "longitud": -79.21135
+    },
+    {
+        "id": 10,
+        "nombre": "Ciudadela Zamora",
+        "latitud": -3.99234,
+        "longitud": -79.21027
+    }
+]

@@ -1,0 +1,127 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<!-- Contenedor principal -->
+<div class="container-fluid p-4">
+    <div class="card bg-light shadow-sm">
+        <div class="card-body">
+            
+            <!-- Título -->
+            <h1 class="text-center text-uppercase fw-bold mb-4">Ejecutar Algoritmos de Grafos</h1>
+            
+            <div class="row g-4">
+                <!-- Sección de Ejecutar BUSQUEDAANCHURA -->
+                <div class="col-md-6">
+                    <div class="card bg-white shadow-sm">
+                        <div class="card-body">
+                            <h2 class="text-center text-uppercase fw-bold mb-3">Ejecutar Búsqueda en Anchura</h2>
+                            <form id="busquedaanchuraForm" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="inicio" class="form-label text-uppercase fw-bold">Inicio:</label>
+                                    <select id="inicio" name="inicio" class="form-select">
+                                        {% for puntoencuentro in data %}
+                                            <option value="{{ puntoencuentro.labelId }}">{{ puntoencuentro.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 text-uppercase fw-bold">Ejecutar Búsqueda en Anchura</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección de Calcular Camino Corto -->
+                <div class="col-md-6">
+                    <div class="card bg-white shadow-sm">
+                        <div class="card-body">
+                            <h2 class="text-center text-uppercase fw-bold mb-3">Calcular Camino Corto</h2>
+                            <form id="caminoCortoForm" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="inicio" class="form-label text-uppercase fw-bold">Inicio:</label>
+                                    <select id="inicio" name="inicio" class="form-select">
+                                        {% for puntoencuentro in data %}
+                                            <option value="{{ puntoencuentro.labelId }}">{{ puntoencuentro.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fin" class="form-label text-uppercase fw-bold">Fin:</label>
+                                    <select id="fin" name="fin" class="form-select">
+                                        {% for puntoencuentro in data %}
+                                            <option value="{{ puntoencuentro.labelId }}">{{ puntoencuentro.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="algoritmo" class="form-label text-uppercase fw-bold">Algoritmo:</label>
+                                    <select id="algoritmo" name="algoritmo" class="form-select">
+                                        <option value="1">Floyd-Warshall</option>
+                                        <option value="2">Bellman-Ford</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 text-uppercase fw-bold">Calcular Camino Corto</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mensaje de carga -->
+            <div id="loadingMessage" class="mt-3 text-warning text-center d-none">
+                Cargando...
+            </div>
+            
+            <!-- Mostrar resultados -->
+            <div id="result" class="mt-4 text-center d-none">
+                <h2 class="text-uppercase fw-bold">Resultado:</h2>
+                <p id="resultadoText" class="fs-5"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // BUSQUEDAANCHURA Form Submission
+    document.getElementById("busquedaanchuraForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const inicio = document.getElementById("inicio").value;
+        document.getElementById("loadingMessage").classList.remove("d-none");
+        document.getElementById("result").classList.add("d-none");
+
+        fetch(`/busquedaanchura/${inicio}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("resultadoText").textContent = data ? data.respuesta : "Error en ejecución";
+                document.getElementById("result").classList.remove("d-none");
+            })
+            .catch(error => {
+                document.getElementById("resultadoText").textContent = "Error de conexión.";
+                document.getElementById("result").classList.remove("d-none");
+            })
+            .finally(() => document.getElementById("loadingMessage").classList.add("d-none"));
+    });
+
+    // Camino Corto Form Submission
+    document.getElementById("caminoCortoForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const inicio = document.getElementById("inicio").value;
+        const fin = document.getElementById("fin").value;
+        const algoritmo = document.getElementById("algoritmo").value;
+        document.getElementById("loadingMessage").classList.remove("d-none");
+        document.getElementById("result").classList.add("d-none");
+
+        fetch(`/calculo_camino_corto/${inicio}/${fin}/${algoritmo}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("resultadoText").textContent = data.msg === "Camino corto calculado exitosamente" ? data.resultado : "Error: " + data.msg;
+                document.getElementById("result").classList.remove("d-none");
+            })
+            .catch(error => {
+                document.getElementById("resultadoText").textContent = "Error de conexión.";
+                document.getElementById("result").classList.remove("d-none");
+            })
+            .finally(() => document.getElementById("loadingMessage").classList.add("d-none"));
+    });
+</script>
+
+{% endblock %}
